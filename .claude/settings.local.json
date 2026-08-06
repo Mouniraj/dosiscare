@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "PowerShell(node --version; npm --version; npx --version; \\(Get-Command node\\).Source)",
+      "PowerShell($env:CI=\"1\"; npx --yes create-expo-app@latest _scaffold --template blank-typescript --no-install 2>&1 | Select-Object -Last 20)",
+      "Bash(tail -n 6 \"/c/Users/mjoub/AppData/Local/Temp/claude/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tasks/b4e0d1t94.output\" 2>/dev/null; echo \"---exists?---\"; ls -d /c/DosisCare/node_modules 2>/dev/null && echo \"node_modules present\")",
+      "Bash(f=\"/c/Users/mjoub/.claude/projects/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tool-results/toolu_01LBBU8xcKodGRxe7CauBGc3.txt\"; echo \"=== accounts / auth logic ===\"; grep -noiE \"accounts\\\\s*[:=]|pass\\\\s*:|email\\\\s*:|role\\\\s*:|dcState|localStorage|currentUser|session\" \"$f\" | head -30; echo; echo \"=== line of 'Iniciar sesión' ===\"; grep -oiE \".{120}Iniciar sesión.{120}\" \"$f\" | head)",
+      "Bash(grep -oE 'email:'\\\\''Correo electrónico'\\\\''.{0,900}' /c/Users/mjoub/.claude/projects/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tool-results/toolu_01LBBU8xcKodGRxe7CauBGc3.txt)",
+      "Bash(grep -oE 'profiles:\\\\s*\\\\[.{0,600}' /c/Users/mjoub/.claude/projects/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tool-results/toolu_01LBBU8xcKodGRxe7CauBGc3.txt)",
+      "Bash(grep -oE 'name:'\\\\''[^'\\\\'']*'\\\\'', ageNum:[0-9]+[^}]{0,120}' /c/Users/mjoub/.claude/projects/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tool-results/toolu_01LBBU8xcKodGRxe7CauBGc3.txt)",
+      "Bash(grep -oE 'pets:\\\\s*\\\\[.{0,650}' /c/Users/mjoub/.claude/projects/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tool-results/toolu_01LBBU8xcKodGRxe7CauBGc3.txt)",
+      "Bash(grep -oE 'appts:\\\\s*\\\\[.{0,600}' /c/Users/mjoub/.claude/projects/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tool-results/toolu_01LBBU8xcKodGRxe7CauBGc3.txt)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/expo/bundledNativeModules.json'\\)['babel-preset-expo']\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\('./node_modules/@noble/hashes/package.json'\\).exports['./pbkdf2'] || require\\('./node_modules/@noble/hashes/package.json'\\).exports['./pbkdf2.js'], null, 1\\)\\)\")",
+      "Bash(node -e \"const p=require\\('./node_modules/@noble/hashes/package.json'\\); console.log\\('type=',p.type,'exportsKeys=',Object.keys\\(p.exports\\).slice\\(0,6\\)\\)\")",
+      "Bash(npx expo *)",
+      "Bash(echo \"=== FAILURE / what went wrong ===\")",
+      "Bash(grep -nE 'FAILURE:|What went wrong|Execution failed|> Task :.*FAILED|error:|Caused by|> ' /c/Users/mjoub/AppData/Local/Temp/claude/C--DosisCare/adeb8bd7-035e-4b96-b864-d841d01046de/tasks/br890pq8u.output)",
+      "PowerShell($env:ANDROID_HOME='C:\\\\Users\\\\mjoub\\\\AppData\\\\Local\\\\Android\\\\Sdk'; $env:ANDROID_SDK_ROOT=$env:ANDROID_HOME; cd C:\\\\DosisCare\\\\android; .\\\\gradlew.bat help --no-daemon 2>&1 | Select-Object -Last 12)"
+    ]
+  }
+}
