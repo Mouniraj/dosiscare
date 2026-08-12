@@ -46,7 +46,7 @@ export const darkColors: ThemeColors = {
   navBg: '#141c28',
   text: '#e8edf5',
   textVar: '#9aa6b8',
-  outline: '#28303f',
+  outline: '#2f394a',
   primary: '#8fb3ff',
   primaryContainer: '#1e2c48',
   greenContainer: '#123829',

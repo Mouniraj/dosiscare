@@ -34,6 +34,7 @@ const DEMO_PROFILES: SeedProfile[] = [
     profile: {
       name: 'Sofía',
       ageNum: 3,
+      birthDate: null,
       weight: 14,
       height: 96,
       allergy: 'Penicilina',
@@ -52,6 +53,7 @@ const DEMO_PROFILES: SeedProfile[] = [
     profile: {
       name: 'Mateo',
       ageNum: 7,
+      birthDate: null,
       weight: 22,
       height: 122,
       allergy: null,
@@ -69,6 +71,7 @@ const DEMO_PROFILES: SeedProfile[] = [
     profile: {
       name: 'Abuela Rosa',
       ageNum: 72,
+      birthDate: null,
       weight: 63,
       height: 158,
       allergy: 'Aspirina',

@@ -10,3 +10,12 @@ export function useDayAgenda(userId: string | undefined, dateIso: string) {
     enabled: !!userId,
   });
 }
+
+/** Dose events grouped by date for an N-day window starting at `startIso`. */
+export function useRangeAgenda(userId: string | undefined, startIso: string, days: number) {
+  return useQuery<Record<string, DoseEvent[]>>({
+    queryKey: ['agenda-range', userId ?? 'none', startIso, days],
+    queryFn: () => AgendaService.getRangeEvents(userId as string, startIso, days),
+    enabled: !!userId,
+  });
+}

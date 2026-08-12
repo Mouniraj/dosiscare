@@ -30,6 +30,7 @@ export function toProfileInput(v: ProfileFormValues): ProfileInput {
   return {
     name: v.name.trim(),
     ageNum: toNumber(v.ageNum),
+    birthDate: null,
     weight: toNumber(v.weight),
     height: toNumber(v.height),
     allergy: toText(v.allergy),

@@ -1,13 +1,15 @@
 import { Redirect } from 'expo-router';
 
 import { useSessionStore } from '../src/store/sessionStore';
+import { useSettingsStore } from '../src/store/settingsStore';
 
 /**
- * Entry route. Directs to the authenticated app or the auth flow.
- * The real auth gate (Secure Store token check) is wired in Phase 3;
- * for now unauthenticated users land on the login flow.
+ * Entry route. First launch shows onboarding; subsequent launches go straight
+ * to the authenticated app or the login screen.
  */
 export default function Index() {
   const isAuthenticated = useSessionStore((s) => s.isAuthenticated);
-  return <Redirect href={isAuthenticated ? '/(app)' : '/(auth)/login'} />;
+  const onboardingSeen = useSettingsStore((s) => s.onboardingSeen);
+  if (isAuthenticated) return <Redirect href="/(app)" />;
+  return <Redirect href={onboardingSeen ? '/(auth)/login' : '/(auth)/onboarding'} />;
 }

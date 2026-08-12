@@ -64,6 +64,40 @@ export function DateTimeField({ label, mode, value, onChange, error, icon }: Dat
     }
   };
 
+  // Web: RN Web has no native picker — render a real HTML <input type="date"/time"> on top.
+  if (Platform.OS === 'web') {
+    const inputType = mode === 'date' ? 'date' : 'time';
+    return (
+      <View style={styles.wrapper}>
+        {label ? <Text style={[styles.label, { color: theme.colors.textVar }]}>{label}</Text> : null}
+        <View
+          style={[
+            styles.field,
+            { backgroundColor: theme.colors.surface, borderColor: error ? theme.status.danger : theme.colors.outline },
+          ]}
+        >
+          <Icon name={fieldIcon} size={19} color={theme.colors.textVar} />
+          <input
+            type={inputType}
+            value={value}
+            onChange={(e: { target: { value: string } }) => onChange(e.target.value)}
+            style={{
+              flex: 1,
+              fontSize: 15,
+              padding: '12px 0',
+              border: 'none',
+              outline: 'none',
+              background: 'transparent',
+              color: theme.colors.text,
+              fontFamily: 'inherit',
+            }}
+          />
+        </View>
+        {error ? <Text style={[styles.error, { color: theme.status.danger }]}>{error}</Text> : null}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.wrapper}>
       {label ? <Text style={[styles.label, { color: theme.colors.textVar }]}>{label}</Text> : null}

@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./app/**/*.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
+  // On web, NativeWind needs `class` mode so `Appearance.setColorScheme(...)`
+  // (used by our theme toggle) doesn't throw. Native ignores this.
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

@@ -14,6 +14,8 @@ interface TextFieldProps extends TextInputProps {
   label?: string;
   error?: string;
   icon?: IconName;
+  /** Trailing static text (e.g. "kg", "cm"). Non-editable. */
+  suffix?: string;
 }
 
 /**
@@ -21,7 +23,7 @@ interface TextFieldProps extends TextInputProps {
  * via a Controller (value/onChangeText/onBlur are standard TextInput props).
  */
 export const TextField = forwardRef<TextInput, TextFieldProps>(function TextField(
-  { label, error, icon, style, ...rest },
+  { label, error, icon, suffix, style, ...rest },
   ref,
 ) {
   const theme = useTheme();
@@ -43,6 +45,7 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(function TextFiel
           style={[styles.input, { color: theme.colors.text }, style]}
           {...rest}
         />
+        {suffix ? <Text style={[styles.suffix, { color: theme.colors.textVar }]}>{suffix}</Text> : null}
       </View>
       {error ? <Text style={[styles.error, { color: theme.status.danger }]}>{error}</Text> : null}
     </View>
@@ -61,5 +64,6 @@ const styles = StyleSheet.create({
     minHeight: 50,
   },
   input: { flex: 1, fontSize: 15, paddingVertical: 12 },
+  suffix: { fontSize: 14, fontWeight: '600' },
   error: { fontSize: 12, marginLeft: 2 },
 });

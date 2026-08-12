@@ -39,3 +39,9 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Tooling / generated (not part of app)
+.claude/
+.agents/
+graphify-out/
+skills-lock.json

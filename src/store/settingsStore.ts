@@ -10,6 +10,7 @@ const KEYS = {
   accent: 'app.accent',
   sound: 'app.sound',
   notifications: 'app.notifications',
+  onboardingSeen: 'app.onboardingSeen',
 } as const;
 
 interface SettingsState {
@@ -18,6 +19,7 @@ interface SettingsState {
   accent: string | null;
   soundEnabled: boolean;
   notificationsEnabled: boolean;
+  onboardingSeen: boolean;
   hydrated: boolean;
   /** Loads persisted preferences from SQLite. Call once after DB init. */
   hydrate: () => Promise<void>;
@@ -26,6 +28,7 @@ interface SettingsState {
   setAccent: (accent: string | null) => Promise<void>;
   setSoundEnabled: (enabled: boolean) => Promise<void>;
   setNotificationsEnabled: (enabled: boolean) => Promise<void>;
+  markOnboardingSeen: () => Promise<void>;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -34,6 +37,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   accent: null,
   soundEnabled: true,
   notificationsEnabled: false,
+  onboardingSeen: false,
   hydrated: false,
 
   hydrate: async () => {
@@ -44,6 +48,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
       accent: all[KEYS.accent] ?? null,
       soundEnabled: all[KEYS.sound] !== '0',
       notificationsEnabled: all[KEYS.notifications] === '1',
+      onboardingSeen: all[KEYS.onboardingSeen] === '1',
       hydrated: true,
     });
   },
@@ -71,5 +76,10 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setNotificationsEnabled: async (enabled) => {
     set({ notificationsEnabled: enabled });
     await settingsRepository.set(KEYS.notifications, enabled ? '1' : '0');
+  },
+
+  markOnboardingSeen: async () => {
+    set({ onboardingSeen: true });
+    await settingsRepository.set(KEYS.onboardingSeen, '1');
   },
 }));

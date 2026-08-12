@@ -28,6 +28,7 @@ export interface Profile extends SyncMetadata {
   userId: string;
   name: string;
   ageNum: number | null;
+  birthDate: string | null;
   weight: number | null;
   height: number | null;
   allergy: string | null;

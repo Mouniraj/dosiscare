@@ -28,6 +28,7 @@ export { Header } from './layout/Header';
 export { ScreenPlaceholder } from './layout/ScreenPlaceholder';
 export { BootSplash } from './layout/BootSplash';
 export { BrandMark } from './layout/BrandMark';
+export { Logo } from './layout/Logo';
 export { AuthScreen } from './layout/AuthScreen';
 export { FormScreen } from './layout/FormScreen';
 

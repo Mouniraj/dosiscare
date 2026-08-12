@@ -1,64 +1,102 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AuthScreen, BrandMark, Button, Card, Icon } from '../../src/components';
-import type { IconName } from '../../src/components';
+import { Logo } from '../../src/components';
 import { useTranslation } from '../../src/i18n/useTranslation';
-import type { TranslationKey } from '../../src/i18n';
-import { useSessionStore } from '../../src/store/sessionStore';
-import { useTheme } from '../../src/theme/useTheme';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { lightColors as brand } from '../../src/theme/colors';
 
-const HIGHLIGHTS: { icon: IconName; titleKey: TranslationKey; textKey: TranslationKey }[] = [
-  { icon: 'medication', titleKey: 'auth.hlMedsTitle', textKey: 'auth.hlMedsText' },
-  { icon: 'groups', titleKey: 'auth.hlFamilyTitle', textKey: 'auth.hlFamilyText' },
-  { icon: 'cloud-off', titleKey: 'auth.hlOfflineTitle', textKey: 'auth.hlOfflineText' },
-];
-
-/** Welcome / onboarding shown right after registration. */
+/** First-launch welcome. Full-immersive primary background, single CTA → Login. */
 export default function OnboardingScreen() {
-  const theme = useTheme();
   const router = useRouter();
   const { t } = useTranslation();
-  const userName = useSessionStore((s) => s.user?.name);
-  const firstName = userName?.split(' ')[0];
+  const markOnboardingSeen = useSettingsStore((s) => s.markOnboardingSeen);
+
+  const onStart = async () => {
+    await markOnboardingSeen();
+    router.replace('/(auth)/login');
+  };
 
   return (
-    <AuthScreen>
-      <View style={styles.hero}>
-        <BrandMark />
-        <Text style={[styles.title, { color: theme.colors.text }]}>
-          {firstName ? t('auth.welcomeName', { name: firstName }) : t('auth.welcome')}
-        </Text>
-        <Text style={[styles.subtitle, { color: theme.colors.textVar }]}>{t('auth.onboardingSub')}</Text>
-      </View>
+    <View style={styles.root}>
+      <StatusBar style="light" />
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <View style={styles.content}>
+          <View style={styles.glass}>
+            <Logo size={80} variant="solid" />
+          </View>
+          <Text style={styles.title}>DosisCare</Text>
+          <Text style={styles.tagline}>{t('auth.tagline')}</Text>
 
-      <View style={styles.list}>
-        {HIGHLIGHTS.map((h) => (
-          <Card key={h.titleKey} style={styles.item}>
-            <View style={[styles.iconWrap, { backgroundColor: theme.colors.primaryContainer }]}>
-              <Icon name={h.icon} size={22} color={theme.colors.primary} />
-            </View>
-            <View style={styles.itemText}>
-              <Text style={[styles.itemTitle, { color: theme.colors.text }]}>{t(h.titleKey)}</Text>
-              <Text style={[styles.itemSub, { color: theme.colors.textVar }]}>{t(h.textKey)}</Text>
-            </View>
-          </Card>
-        ))}
-      </View>
-
-      <Button label={t('auth.start')} fullWidth onPress={() => router.replace('/(app)')} />
-    </AuthScreen>
+          <Pressable
+            onPress={onStart}
+            accessibilityRole="button"
+            accessibilityLabel={t('auth.begin')}
+            style={({ pressed }) => [styles.cta, pressed && { opacity: 0.9, transform: [{ scale: 0.98 }] }]}
+          >
+            <Text style={styles.ctaLabel}>{t('auth.begin')}</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  hero: { alignItems: 'center', gap: 10 },
-  title: { fontSize: 22, fontWeight: '800', marginTop: 6 },
-  subtitle: { fontSize: 14, textAlign: 'center', lineHeight: 20 },
-  list: { gap: 12 },
-  item: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  iconWrap: { width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-  itemText: { flex: 1 },
-  itemTitle: { fontSize: 15, fontWeight: '700' },
-  itemSub: { fontSize: 13, marginTop: 2 },
+  root: { flex: 1, backgroundColor: brand.primary },
+  safe: { flex: 1 },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    gap: 18,
+  },
+  glass: {
+    width: 128,
+    height: 128,
+    borderRadius: 32,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.22)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#ffffff',
+    letterSpacing: -0.6,
+    marginTop: 4,
+  },
+  tagline: {
+    fontSize: 15,
+    color: 'rgba(255,255,255,0.85)',
+    textAlign: 'center',
+    lineHeight: 22,
+    maxWidth: 300,
+    marginBottom: 28,
+  },
+  cta: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 40,
+    paddingVertical: 16,
+    borderRadius: 100,
+    minWidth: 200,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 14,
+    elevation: 4,
+  },
+  ctaLabel: {
+    color: brand.primary,
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+  },
 });

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="DosisCare">
+  <rect x="10" y="10" width="200" height="200" rx="56" fill="#2f6bed"/>
+  <path d="M72 58 H120 C154 58, 174 82, 174 110 C174 138, 154 162, 120 162 H72 Z" fill="none" stroke="#ffffff" stroke-width="18" stroke-linejoin="round"/>
+  <path d="M48 110 H74 L82 88 L100 132 L108 110 H150" fill="none" stroke="#d7f2e6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

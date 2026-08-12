@@ -3,6 +3,7 @@ import type { User } from '../database/models';
 import { userRepository } from '../database/repositories';
 import { generateId } from '../utils/id';
 import { hashPassword, verifyPassword } from '../utils/password';
+import { ProfileService } from './ProfileService';
 import { clearSession, readSession, saveSession } from './secureStore';
 
 /** Seeded demo account from the prototype (offline sign-in works out of the box). */
@@ -35,6 +36,14 @@ export interface RegisterInput {
   name: string;
   email: string;
   password: string;
+  /** Titular's profile — created alongside the user so Personas has an entry from day one. */
+  holder: {
+    birthDate: string;
+    weight: number | null;
+    height: number | null;
+    allergy: string | null;
+    photo: string | null;
+  };
 }
 
 export interface ResetInput {
@@ -82,7 +91,7 @@ export const AuthService = {
     return establishSession(user);
   },
 
-  async register({ name, email, password }: RegisterInput): Promise<User> {
+  async register({ name, email, password, holder }: RegisterInput): Promise<User> {
     const normalized = normalizeEmail(email);
     const existing = await userRepository.findByEmail(normalized);
     if (existing) throw new AuthError('emailExists');
@@ -93,6 +102,16 @@ export const AuthService = {
       role: 'owner',
       passwordHash,
       avatar: null,
+    });
+    await ProfileService.createHolder(user.id, {
+      name: name.trim(),
+      ageNum: null,
+      birthDate: holder.birthDate,
+      weight: holder.weight,
+      height: holder.height,
+      allergy: holder.allergy,
+      role: 'Titular',
+      photo: holder.photo,
     });
     return establishSession(user);
   },

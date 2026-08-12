@@ -1,6 +1,7 @@
 import type * as SQLite from 'expo-sqlite';
 
 import { migration001 } from './001_initial';
+import { migration002 } from './002_profile_birthdate';
 import type { Migration } from './types';
 
 export type { Migration } from './types';
@@ -9,7 +10,7 @@ export type { Migration } from './types';
  * Ordered list of migrations. Append new ones with an incrementing `version`;
  * never edit a released migration — add a new one instead.
  */
-const migrations: Migration[] = [migration001];
+const migrations: Migration[] = [migration001, migration002];
 
 interface UserVersionRow {
   user_version: number;

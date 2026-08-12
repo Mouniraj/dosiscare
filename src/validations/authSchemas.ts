@@ -13,9 +13,14 @@ export function makeLoginSchema(t: TFn) {
 export type LoginForm = z.infer<ReturnType<typeof makeLoginSchema>>;
 
 export function makeRegisterSchema(t: TFn) {
+  const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
   return z
     .object({
       name: z.string().trim().min(2, t('val.fullNameRequired')),
+      birthDate: z.string().regex(ISO_DATE, t('val.birthDateRequired')),
+      weight: z.string().optional(),
+      height: z.string().optional(),
+      allergies: z.array(z.string()).optional(),
       email: z.string().trim().min(1, t('val.emailRequired')).email(t('val.emailInvalid')),
       password: z.string().min(6, t('val.passwordMin')),
       confirm: z.string().min(1, t('val.confirmRequired')),

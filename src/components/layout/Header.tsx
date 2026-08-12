@@ -22,7 +22,13 @@ export function Header({ title, subtitle, onBack, actions }: HeaderProps) {
   return (
     <View style={[styles.container, { borderBottomColor: theme.colors.outline }]}>
       {onBack ? (
-        <Pressable onPress={onBack} accessibilityRole="button" accessibilityLabel="Atrás" hitSlop={8}>
+        <Pressable
+          onPress={onBack}
+          accessibilityRole="button"
+          accessibilityLabel="Atrás"
+          hitSlop={8}
+          style={styles.tapTarget}
+        >
           <Icon name="arrow-back" size={24} color={theme.colors.text} />
         </Pressable>
       ) : null}
@@ -44,6 +50,7 @@ export function Header({ title, subtitle, onBack, actions }: HeaderProps) {
             accessibilityRole="button"
             accessibilityLabel={a.accessibilityLabel}
             hitSlop={8}
+            style={styles.tapTarget}
           >
             <Icon name={a.icon} size={22} color={theme.colors.text} />
           </Pressable>
@@ -64,6 +71,8 @@ const styles = StyleSheet.create({
   },
   titles: { flex: 1 },
   title: { fontSize: 19, fontWeight: '800' },
-  subtitle: { fontSize: 12, marginTop: 2 },
-  actions: { flexDirection: 'row', gap: 16 },
+  subtitle: { fontSize: 13, marginTop: 2 },
+  actions: { flexDirection: 'row', gap: 8 },
+  // Meets Apple HIG 44×44 / Material 48dp minimum touch target.
+  tapTarget: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
 });
